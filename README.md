@@ -1,2 +1,2 @@
 # CrowdWorksTextEditor
-Text editor that automatically inserts line breaks for use with CrowdWorks.
+Text editor that automatically inserts line breaks for use with [CrowdWorks](https://crowdworks.jp/).
