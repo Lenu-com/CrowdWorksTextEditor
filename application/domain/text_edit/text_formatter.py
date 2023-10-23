@@ -1,38 +1,35 @@
 from typing import Final
 
+# full-width=1.0, half-width=0.5
+CHAR_LIMIT: Final[float] = 15.0
+CHAR_SIZE = {'full-width': 1.0, 'half-width': 0.5}
+FULL_WIDTH_HEX = 0x3000
+
 class TextFormatter:
-    # full-width=1.0, half-width=0.5
-    __CHAR_LIMIT: Final[float] = 15.0
-    __CHAR_SIZE = {'full-width': 1.0, 'half-width': 0.5}
-    __FULL_WIDTH_HEX = 0x3000
-    
     def __init__(self):
-        self.char_count: float = 0.0
+        self.__char_count: float = 0.0
+        self.__formatted_text = ''
     
     def __is_full_width(self, char: str) -> bool:
-        if ord(char) <= self.__FULL_WIDTH_HEX:
+        if ord(char) <= FULL_WIDTH_HEX:
             return False
         return True
     
-    def __add_character_size(self, char: str) -> None:
+    def __add_character_size(self, char: str) -> str:
         if self.__is_full_width(char):
-            self.char_count += self.__CHAR_SIZE.get('full-width')
+            self.__char_count += CHAR_SIZE['full-width']
         else:
-            self.char_count += self.__CHAR_SIZE.get('half-width')
+            self.__char_count += CHAR_SIZE['half-width']
     
-    def __insert_newline(self,formatted_text: str) -> str:
-        if self.char_count >= self.__CHAR_LIMIT:
-            formatted_text += '\n'
-            self.char_count = 0
-        return formatted_text
+    def __insert_newline(self) -> None:
+        if self.__char_count >= CHAR_LIMIT:
+            self.__formatted_text += '\n'
+            self.__char_count = 0
     
-    def format_text(self, text: str) -> str:
-        formatted_text = ''
-        
+    def format_text(self, text: str) -> None:
         for char in text:
-            formatted_text += char
+            self.__formatted_text += char
             self.__add_character_size(char)
             # TODO Consider making formatted_text a member variable
-            formatted_text = self.__insert_newline(formatted_text)
-            
-        return formatted_text
+            self.__insert_newline()
+        return self.__formatted_text
