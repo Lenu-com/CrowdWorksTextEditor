@@ -1,9 +1,9 @@
-from typing import Final
+from typing import Final, Dict
 
 # full-width=1.0, half-width=0.5
 CHAR_LIMIT: Final[float] = 15.0
-CHAR_SIZE = {'full-width': 1.0, 'half-width': 0.5}
-FULL_WIDTH_HEX = 0x3000
+CHAR_SIZE: Final[Dict[str, int]] = {'full-width': 1.0, 'half-width': 0.5}
+FULL_WIDTH_HEX: Final[int] = 0x3000 # TODO: Planning to implement Domain Object Hex
 
 class TextFormatter:
     def __init__(self):
@@ -30,6 +30,6 @@ class TextFormatter:
         for char in text:
             self.__formatted_text += char
             self.__add_character_size(char)
-            # TODO Consider making formatted_text a member variable
+            # TODO: Consider making formatted_text a member variable
             self.__insert_newline()
         return self.__formatted_text
